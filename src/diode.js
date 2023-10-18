@@ -1,3 +1,5 @@
+const { save } = require("./src/browser");
+const { info } = require("./logger");
 //const Gpio = require("onoff").Gpio;
 //const ledGreen = new Gpio(16, "out");
 //const ledOrange = new Gpio(20, "out");
@@ -6,15 +8,16 @@
 module.exports = {
   triggerGreen: () => {
     //ledGreen.writeSync(1);
-    console.log("GREEN");
+    info("GREEN");
   },
   triggerRed: (reason) => {
     //ledRed.writeSync(1);
-    console.log("RED: " + reason);
+    info("RED: " + reason);
   },
   triggerOrange: () => {
-    //ledOrange.writeSync(1);
-    console.log("ORANGE");
+    ledOrange.writeSync(1);
+    save("ORANGE", "Scan error");
+    info("ORANGE");
   },
   resetLeds: () => {
     //ledGreen.writeSync(0);
@@ -25,7 +28,6 @@ module.exports = {
     //ledGreen.writeSync(1);
     //ledOrange.writeSync(1);
     //ledRed.writeSync(1);
-
     //setTimeout(resetLeds, 1000);
   },
 };
