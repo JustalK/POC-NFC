@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+        .img {
+            position: absolute;
+            left: 50%;
+            top: 25%;
+            transform: translate(-50%, -50%);
+        }
+        .content {
+            position: absolute;
+            left: 50%;
+            top: 65%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        #DETECTED,
+        #SCAN {
+            text-transform: uppercase;
+            font-size: 80px;
+            width: 100%;
+            text-align: center;
+        }
+        #GREEN {
+            font-size: 80px;
+        }
+        .circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+        }
+        .green {
+            background-color: green;
+        }
+        .red {
+            margin-top: 50px;
+            background-color: red;
+        }
+        .orange {
+            margin-top: 50px;
+            background-color: orange;
+        }
+        .error {
+            font-size: 80px;
+            width: 80%;
+            text-align: center;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <img class="img" src="imgs/logo.png" />
+    <div id="SCAN" class="content">Scan your tag</div>
+    <div id="DETECTED" class="hidden content">Tag detected<br /> Searching...</div>
+    <div id="RED" class="hidden content"><div class="circle red"></div><div class="message error"></div></div>
+    <div id="ORANGE" class="hidden content"><div class="circle orange"></div><div class="message error"></div></div>
+    <div id="GREEN" class="hidden content"><div class="circle green"></div></div>
+    <script>
+        function read() {
+            fetch('http://localhost:3000/result.json').then(r => r.json()).then(data => {
+                const { page, message } = data
+                const choices = ["SCAN", "DETECTED", "RED", "GREEN"] 
+                const index = choices.indexOf(page);
+                choices.splice(index, 1);
+                const messages = document.querySelectorAll(".message");
+                messages.forEach(m => {
+                    m.innerHTML = message;
+                });
+                document.getElementById(page).classList.remove("hidden");
+                for (const rc of choices) {
+                    document.getElementById(rc).classList.add("hidden");
+                }
+            })
+        }
+        setInterval(read, 1000)
+    </script>
+</body>
+
+</html>
