@@ -1,5 +1,6 @@
 // without Babel in ES2015
 const { NFC } = require("nfc-pcsc");
+const { info } = require("./src/logger");
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
 const CONSTANTS = require("./helpers/constants");
@@ -11,14 +12,34 @@ const { openBrowser, save } = require("./src/browser");
 const Control = require("./src/Control");
 const nfc = new NFC();
 
-let n = 0;
-while (n < 2) {
-  Control.id = uuidv4();
-  handleNewCard({
-    id: Control.id,
+info("Start of the program");
+
+nfc.on("reader", async (reader) => {
+  Control.reader = reader;
+  reader.autoProcessing = false;
+
+  info(`Tag reader plugged`);
+
+  reader.on("card", async () => {
+    const id = uuidv4();
+    Control.id = id;
+    handleNewCard({
+      id,
+    });
   });
-  n++;
-}
+
+  reader.on("card.off", () => {
+    info(`Tag removed`);
+  });
+
+  reader.on("error", (err) => {
+    info(`${reader.reader.name}  an error occurred`, err);
+  });
+
+  reader.on("end", () => {
+    info(`Tag reader removed`);
+  });
+});
 
 /**
 openBrowser();
@@ -32,9 +53,10 @@ nfc.on("reader", async (reader) => {
   save("SCAN", "");
 
   reader.on("card", async (card) => {
-    Control.id = uuidv4();
+    const id = uuidv4();
+    Control.id = id
     handleNewCard({
-      id: Control.id,
+      id
     });
   });
 

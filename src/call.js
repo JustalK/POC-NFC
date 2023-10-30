@@ -1,4 +1,5 @@
 const CONSTANTS = require("../helpers/constants");
+const { info } = require("./logger");
 
 module.exports = {
   getTag: async (id) => {
@@ -15,41 +16,65 @@ module.exports = {
           query: { term: { "manufacturerId.raw": id } },
         }),
       });
-    } catch (error) {
-      console.log(error);
+    } catch (_) {
+      info("[getTag] The post request has failed");
       return null;
     }
 
     if (!response) {
+      info("[getTag] The response is empty");
       return null;
     }
 
     const responseJSON = await response.json();
+
     if (!responseJSON) {
+      info("[getTag] The translated response is empty");
       return null;
     }
 
     const result = responseJSON.result;
+
     if (!result || !result.hits) {
+      info("[getTag] The result is empty");
       return null;
     }
 
     const hit = result.hits[0];
+
     if (!hit) {
+      info("[getTag] No result found for this tag");
       return null;
     }
 
     const _source = hit._source;
     if (!_source) {
+      info("[getTag] The tag has no data");
       return null;
     }
 
     const tagId = _source.tagId;
     const clientId = _source.clientId;
     const batteryLevel = _source.batteryLevel;
-    const lastPositionUpdate = _source.location?.lastPositionUpdate;
+    const lastTagUpdate = _source.lastTagUpdate;
 
-    if (!tagId || !clientId || !batteryLevel || !lastPositionUpdate) {
+    if (!tagId) {
+      info("[getTag] The tag has no tagId");
+      return null;
+    }
+
+    if (!clientId) {
+      info("[getTag] The tag has no clientId");
+      return null;
+    }
+
+    if (!batteryLevel) {
+      info("[getTag] The tag has no battery level");
+      return null;
+    }
+
+    if (!lastTagUpdate) {
+      info("[getTag] The tag has no date for last update");
       return null;
     }
 
@@ -57,7 +82,7 @@ module.exports = {
       tagId,
       clientId,
       batteryLevel,
-      lastPositionUpdate,
+      lastTagUpdate,
     };
   },
 };

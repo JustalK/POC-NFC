@@ -1,47 +1,49 @@
 const CONSTANTS = require("../helpers/constants");
-const { triggerGreen, triggerRed } = require("./diode");
-const { save } = require("./browser");
+
+/**
+ * Check that the information from the tag pass all the information
+ * @param {Object} The tag with all is information
+ * @returns {Object} The code with the message associated
+ */
+const checkTag = ({ tagId, clientId, batteryLevel, lastTagUpdate }) => {
+  if (!tagId) {
+    return {
+      code: CONSTANTS.RESPONSE_RED,
+      message: "Tag Not Found",
+    };
+  }
+
+  const timeTenMinutesAgo =
+    Date.now() - 1000 * 60 * CONSTANTS.MINIMUM_TIME_DIFFERENCE_IN_MINUTES;
+  if (!CONSTANTS.TEST && lastTagUpdate < timeTenMinutesAgo) {
+    return {
+      code: CONSTANTS.RESPONSE_RED,
+      message: `Last tag position updated more than ${CONSTANTS.MINIMUM_TIME_DIFFERENCE_IN_MINUTES} minutes ago`,
+    };
+  }
+
+  if (batteryLevel < CONSTANTS.MINIMUM_BATTERY_LEVEL) {
+    return {
+      code: CONSTANTS.RESPONSE_RED,
+      message: `Battery level lower than ${parseInt(
+        CONSTANTS.MINIMUM_BATTERY_LEVEL * 100
+      )}%`,
+    };
+  }
+
+  if (clientId !== CONSTANTS.CLIENT_ID) {
+    return {
+      code: CONSTANTS.RESPONSE_RED,
+      message: "Tag belong to another client",
+    };
+  }
+
+  return {
+    code: CONSTANTS.RESPONSE_GREEN,
+    message: null,
+  };
+};
 
 module.exports = {
-  checkTag: (tag) => {
-    if (!tag) {
-      save("RED", "Tag not found");
-      triggerRed("Tag Not Found");
-      return;
-    }
-
-    const { tagId, clientId, batteryLevel, lastPositionUpdate } = tag;
-
-    // TEST 1 - ID Tag does not exist or found
-    if (!tagId) {
-      save("RED", "Tag not found");
-      triggerRed("TEST 1");
-      return;
-    }
-
-    // TEST 4 - Last Position Update over 10 minutes
-    const timeTenMinutesAgo = Date.now() - 1000 * 60 * 10;
-    if (!CONSTANTS.TEST && lastPositionUpdate < timeTenMinutesAgo) {
-      save("RED", "Last tag position updated more than 10 minutes ago");
-      triggerRed("TEST 4");
-      return;
-    }
-
-    // TEST 5 - Battery level check over 30%
-    if (batteryLevel < CONSTANTS.MINIMUM_BATTERY_LEVEL) {
-      save("RED", "Battery level lower than 30%");
-      triggerRed("TEST 5");
-      return;
-    }
-
-    // TEST 6 - Tag belong to the right client
-    if (clientId !== CONSTANTS.CLIENT_ID) {
-      save("RED", "Tag belong to another client");
-      triggerRed("TEST 6");
-      return;
-    }
-
-    save("GREEN", "");
-    triggerGreen();
-  },
+  checkTag,
 };
