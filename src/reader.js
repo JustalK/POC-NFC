@@ -129,48 +129,8 @@ const getIdFromFirmwareVersionUnder4 = (buffer) => {
   return id[0];
 };
 
-/**
-const getIdFromLower4 = (data) => {
-  const totalBytes = CONSTANTS.MAX_MEMORY_ELA * CONSTANTS.SIZE_ADDRESS;
-  let payload = [];
-  while (totalBytes) {
-    payload.push(data.slice(cursor, cursor + CONSTANTS.SIZE_ADDRESS));
-    totalBytes -= CONSTANTS.SIZE_ADDRESS;
-  }
-
-  let bufferString = null;
-  try {
-    const buffer = Buffer.concat(payload);
-    bufferString = buffer.toString(CONSTANTS.ASCII_DATA_FORMAT);
-  } catch (_) {
-    info("[getIdFromLower4] Error when reading buffer");
-    return null;
-  }
-
-  if (!id || id.length === 0) {
-    info("[getIdFromLower4] Id not found in the data of the tag");
-    return null;
-  }
-
-  return id[0];
-};
- */
-
 module.exports = {
   getR7,
   getData,
   getIdFromFirmwareVersionUnder4,
-  /**
-  getData: (data) => {
-    let cursor = CONSTANTS.BUFFER_STARTING_POINT;
-    const R7 = data.slice(cursor, cursor + CONSTANTS.SIZE_BUFFER_R7);
-    const bufferR7 = R7.toString("hex");
-    cursor += CONSTANTS.SIZE_BUFFER_R7;
-    if (bufferR7 === "65736f6e") {
-      return getFromUp4(data, cursor);
-    } else {
-      return getFromLower4(data, cursor);
-    }
-  },
-  **/
 };

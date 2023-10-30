@@ -72,23 +72,26 @@
     <div id="ORANGE" class="hidden content"><div class="circle orange"></div><div class="message error"></div></div>
     <div id="GREEN" class="hidden content"><div class="circle green"></div></div>
     <script>
+        const messages = document.querySelectorAll(".message");
+        const contents = document.querySelectorAll(".content");
+        let previousPage = null
         function read() {
             fetch('http://localhost:3000/result.json').then(r => r.json()).then(data => {
                 const { page, message } = data
-                const choices = ["SCAN", "DETECTED", "RED", "GREEN"] 
-                const index = choices.indexOf(page);
-                choices.splice(index, 1);
-                const messages = document.querySelectorAll(".message");
-                messages.forEach(m => {
-                    m.innerHTML = message;
-                });
-                document.getElementById(page).classList.remove("hidden");
-                for (const rc of choices) {
-                    document.getElementById(rc).classList.add("hidden");
+                if (previousPage !== page) {
+                    const index = ["SCAN", "DETECTED", "RED", "ORANGE", "GREEN"].indexOf(page);
+                    contents.forEach(c => {
+                        c.classList.add("hidden");
+                    });
+                    messages.forEach(m => {
+                        m.innerHTML = message;
+                    });
+                    contents[index].classList.remove("hidden");
+                    previousPage = page
                 }
             })
         }
-        setInterval(read, 1000)
+        setInterval(read, 500)
     </script>
 </body>
 

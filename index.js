@@ -1,5 +1,6 @@
 // without Babel in ES2015
 const { NFC } = require("nfc-pcsc");
+const express = require("express");
 const { info } = require("./src/logger");
 const { v4: uuidv4 } = require("uuid");
 const { handleNewCard } = require("./src/process");
@@ -75,9 +76,9 @@ nfc.on("error", (err) => {
   console.log("an error occurred", err);
 });
 
+**/
 const app = express();
 app.use(express.static(__dirname + "/www"));
 
 app.listen("3000");
 console.log("working on 3000");
-**/

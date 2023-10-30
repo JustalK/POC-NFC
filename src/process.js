@@ -1,5 +1,6 @@
 const Control = require("./Control");
 const { info } = require("./logger");
+const { save } = require("./browser");
 const { getR7, getData, getIdFromFirmwareVersionUnder4 } = require("./reader");
 const { getTag } = require("./call");
 const { checkTag } = require("./checker");
@@ -11,6 +12,7 @@ module.exports = {
     info(`=========================================`);
     resetLeds();
     triggerCode({ code: CONSTANTS.RESPONSE_ORANGE });
+    save("DETECTED", "");
     info(`[handleNewCard] Tag scanned: ${id}`);
     const firmwareVersion = await getR7();
 
