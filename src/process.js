@@ -10,6 +10,7 @@ module.exports = {
   handleNewCard: async ({ id }) => {
     info(`=========================================`);
     resetLeds();
+    triggerCode({ code: CONSTANTS.RESPONSE_ORANGE });
     info(`[handleNewCard] Tag scanned: ${id}`);
     const firmwareVersion = await getR7();
 
@@ -19,7 +20,7 @@ module.exports = {
 
     // If I dont have the right firmware version
     if (!firmwareVersion) {
-      triggerCode({ code: CONSTANTS.RESPONSE_ORANGE });
+      triggerCode({ code: CONSTANTS.RESPONSE_BLINK_ORANGE });
       return;
     }
 
@@ -31,7 +32,7 @@ module.exports = {
 
     // If I dont have the buffer
     if (!buffer) {
-      triggerCode({ code: CONSTANTS.RESPONSE_ORANGE });
+      triggerCode({ code: CONSTANTS.RESPONSE_BLINK_ORANGE });
       return;
     }
 
@@ -43,7 +44,7 @@ module.exports = {
 
     // If I dont have the id
     if (!tagID) {
-      triggerCode({ code: CONSTANTS.RESPONSE_ORANGE });
+      triggerCode({ code: CONSTANTS.RESPONSE_BLINK_ORANGE });
       return;
     }
 
@@ -76,53 +77,5 @@ module.exports = {
     }
 
     triggerCode(result);
-  },
-};
-
-module.exports = {
-  handleNewCard: async ({ id }) => {
-    //resetLeds();
-    info(`Card inserted: ${id}`);
-    //save("DETECTED", "");
-
-    let data = null;
-    try {
-      data = await Control.reader.read(0, CONSTANTS.MAX_MEMORY_ELA);
-    } catch (err) {
-      info("Error when reading data");
-      triggerOrange();
-    }
-
-    if (!data) {
-      info("Data is null");
-      triggerOrange();
-    }
-
-    if (Control.isProcessAbandonned(id)) {
-      return;
-    }
-
-    const result = getData(data);
-
-    if (Control.isProcessAbandonned(id)) {
-      return;
-    }
-
-    const id = result[CONSTANTS.ID_ENCAP_1.NAME].value;
-
-    if (Control.isProcessAbandonned(id)) {
-      return;
-    }
-
-    info(`TagId: `, id.replace("WP_", ""));
-    const tag = await getTag(
-      CONSTANTS.TEST ? CONSTANTS.TEST_TAG : id.replace("WP_", "")
-    );
-
-    if (Control.isProcessAbandonned(id)) {
-      return;
-    }
-
-    checkTag(tag);
   },
 };

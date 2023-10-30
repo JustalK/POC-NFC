@@ -2,9 +2,12 @@ const Gpio = require("onoff").Gpio;
 const ledRed = new Gpio(21, "out");
 const ledOrange = new Gpio(20, "out");
 const ledGreen = new Gpio(16, "out");
+const carousel = new Gpio(4, "out");
 const { info } = require("./logger");
 const CONSTANTS = require("../helpers/constants");
 let timeoutID = null;
+let timeoutBlinkID = null;
+let valueOrange = 1;
 
 /**
  * Trigger the effect associated to a certain code
@@ -12,7 +15,7 @@ let timeoutID = null;
  * @param {string} message The message associated with the code
  */
 const triggerCode = ({ code, message = "" }) => {
-  clearTimeout(timeoutID);
+  resetLeds();
   switch (code) {
     case CONSTANTS.RESPONSE_RED:
       info(`[triggerCode] ${message}`);
@@ -20,22 +23,42 @@ const triggerCode = ({ code, message = "" }) => {
       break;
     case CONSTANTS.RESPONSE_ORANGE:
       ledOrange.writeSync(1);
+      return;
+    case CONSTANTS.RESPONSE_BLINK_ORANGE:
+      blinkOrange(valueOrange);
+      timeoutBlinkID = setInterval(() => {
+        blinkOrange(valueOrange === 1 ? 0 : 1);
+      }, 300);
       break;
     case CONSTANTS.RESPONSE_GREEN:
       info(`[triggerCode] Tag allowed`);
       ledGreen.writeSync(1);
+      carousel.writeSync(1);
       break;
   }
   timeoutID = setTimeout(resetLeds, 2000);
 };
 
 /**
+ * Blink the orange light
+ * @param {number} value The value of the orange led
+ */
+const blinkOrange = (value) => {
+  ledOrange.writeSync(value);
+  valueOrange = value;
+};
+
+/**
  * Reset all the led to 0
  */
 const resetLeds = () => {
+  clearTimeout(timeoutID);
+  clearTimeout(timeoutBlinkID);
+  valueOrange = 0;
   ledGreen.writeSync(0);
   ledOrange.writeSync(0);
   ledRed.writeSync(0);
+  carousel.writeSync(0);
 };
 
 /**

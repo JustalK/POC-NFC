@@ -3,7 +3,7 @@ const TEST_TAG = "21A01575";
 const URL_TAG_API =
   "https://omniscient-apimanage-prod.azure-api.net/clone/omniscient/tags/_search";
 const API_SUBSCRIPTION_KEY = "48adbc429be54120bfe23b119e7c7cb1";
-const CLIENT_ID = "customer-renter-demo_loueur_materiel";
+const CLIENT_ID = "customer-worksite-bureau_sevres";
 const MINIMUM_BATTERY_LEVEL = 0.3;
 const MINIMUM_TIME_DIFFERENCE_IN_MINUTES = 10;
 
@@ -45,6 +45,7 @@ const ASCII_DATA_FORMAT = "ascii";
 
 const RESPONSE_RED = "red";
 const RESPONSE_ORANGE = "orange";
+const RESPONSE_BLINK_ORANGE = "orange_blink";
 const RESPONSE_GREEN = "green";
 
 module.exports = {
@@ -77,6 +78,7 @@ module.exports = {
   ASCII_DATA_FORMAT,
   RESPONSE_RED,
   RESPONSE_ORANGE,
+  RESPONSE_BLINK_ORANGE,
   RESPONSE_GREEN,
   MINIMUM_TIME_DIFFERENCE_IN_MINUTES,
 };
