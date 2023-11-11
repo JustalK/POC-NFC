@@ -15,12 +15,10 @@
             left: 50%;
             top: 25%;
             transform: translate(-50%, -50%);
+            z-index: 100;
         }
         .content {
             position: absolute;
-            left: 50%;
-            top: 65%;
-            transform: translate(-50%, -50%);
             display: flex;
             justify-content: center;
             flex-direction: column;
@@ -38,25 +36,29 @@
             font-size: 80px;
         }
         .circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
+            width: 100%;
+            height: 100vh;
         }
         .green {
             background-color: green;
         }
         .red {
-            margin-top: 50px;
             background-color: red;
         }
         .orange {
-            margin-top: 50px;
             background-color: orange;
         }
         .error {
-            font-size: 80px;
+            font-size: 70px;
             width: 80%;
             text-align: center;
+        }
+        .detected,
+        .scan,
+        .message {
+            position: absolute;
+            z-index: 100;
+            top: 50%;
         }
         .hidden {
             display: none;
@@ -66,8 +68,8 @@
 
 <body>
     <img class="img" src="imgs/logo.png" />
-    <div id="SCAN" class="content">Scan your tag</div>
-    <div id="DETECTED" class="hidden content">Tag detected<br /> Searching...</div>
+    <div id="SCAN" class="content scan">Scan your tag</div>
+    <div id="DETECTED" class="hidden content detected">Tag detected<br /> Searching...</div>
     <div id="RED" class="hidden content"><div class="circle red"></div><div class="message error"></div></div>
     <div id="ORANGE" class="hidden content"><div class="circle orange"></div><div class="message error"></div></div>
     <div id="GREEN" class="hidden content"><div class="circle green"></div></div>

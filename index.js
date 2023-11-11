@@ -38,45 +38,6 @@ nfc.on("reader", async (reader) => {
   });
 });
 
-/**
-openBrowser();
-startLeds();
-
-nfc.on("reader", async (reader) => {
-  Control.reader = reader
-  reader.autoProcessing = false;
-
-  console.log(`${reader.reader.name}  device attached`);
-  save("SCAN", "");
-
-  reader.on("card", async (card) => {
-    const id = uuidv4();
-    Control.id = id
-    handleNewCard({
-      id
-    });
-  });
-
-  reader.on("card.off", (card) => {
-    resetLeds();
-    console.log(`${reader.reader.name}  card removed`);
-  });
-
-  reader.on("error", (err) => {
-    console.log(`${reader.reader.name}  an error occurred`, err);
-    triggerOrange();
-  });
-
-  reader.on("end", () => {
-    console.log(`${reader.reader.name}  device removed`);
-  });
-});
-
-nfc.on("error", (err) => {
-  console.log("an error occurred", err);
-});
-
-**/
 const app = express();
 app.use(express.static(__dirname + "/www"));
 
