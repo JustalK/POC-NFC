@@ -65,7 +65,7 @@ const getData = async () => {
   }
 };
 
-const getFromUp4 = (data, cursor) => {
+const getIdFromFirmwareVersionOver4 = (data, cursor) => {
   cursor += CONSTANTS.SIZE_T0;
   console.log(
     `Max Bytes: `,
@@ -92,7 +92,7 @@ const getFromUp4 = (data, cursor) => {
     cursor += CONSTANTS.SIZE_T1_L1_T2_L2 + l2;
   }
 
-  return result;
+  return result[1010].value.replace("WP_", "");
 };
 
 /**
@@ -132,5 +132,6 @@ const getIdFromFirmwareVersionUnder4 = (buffer) => {
 module.exports = {
   getR7,
   getData,
+  getIdFromFirmwareVersionOver4,
   getIdFromFirmwareVersionUnder4,
 };

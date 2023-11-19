@@ -1,7 +1,12 @@
 const Control = require("./Control");
 const { info } = require("./logger");
 const { save } = require("./browser");
-const { getR7, getData, getIdFromFirmwareVersionUnder4 } = require("./reader");
+const {
+  getR7,
+  getData,
+  getIdFromFirmwareVersionUnder4,
+  getIdFromFirmwareVersionOver4,
+} = require("./reader");
 const { getTag } = require("./call");
 const { checkTag } = require("./checker");
 const { triggerCode, resetLeds } = require("./response");
@@ -38,7 +43,10 @@ module.exports = {
       return;
     }
 
-    const tagID = getIdFromFirmwareVersionUnder4(buffer);
+    const tagID =
+      firmwareVersion === CONSTANTS.FIRMWARE_VERSION_ESON
+        ? getIdFromFirmwareVersionOver4(buffer, 0)
+        : getIdFromFirmwareVersionUnder4(buffer);
 
     if (Control.isProcessAbandonned(id)) {
       return;
