@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node index.js"
+    "start": "npm run dev --prefix PROJECT-WIPEOUT-master"
   },
   "dependencies": {
     "@pokusew/pcsclite": "^0.6.0",
