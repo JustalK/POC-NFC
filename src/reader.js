@@ -92,6 +92,11 @@ const getIdFromFirmwareVersionOver4 = (data, cursor) => {
     cursor += CONSTANTS.SIZE_T1_L1_T2_L2 + l2;
   }
 
+  if (!result[1010] || !result[1010]?.value) {
+    info("[getIdFromFirmwareVersionOver4] Id not found in the data of the tag");
+    return null;
+  }
+
   return result[1010].value.replace("WP_", "");
 };
 
@@ -117,7 +122,12 @@ const getIdFromFirmwareVersionUnder4 = (buffer) => {
     info("[getIdFromFirmwareVersionUnder4] Error when reading buffer");
     return null;
   }
-  const id = bufferString.match(/(?<="Id":{"init":\d*,"value":)\d*/g);
+  let id = bufferString.match(/(?<="Id":{"init":\d*,"value":)\d*/g);
+
+  if (!id || id.length === 0) {
+    // Try if it's a Blue Lite Id without Mesh
+    id = bufferString.match(/(?<="Name":{"init":.*,"value":")[^"]*/g);
+  }
 
   if (!id || id.length === 0) {
     info(

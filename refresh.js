@@ -2,7 +2,7 @@ const cp = require("child_process");
 const fs = require("fs");
 const decompress = require("decompress");
 
-const PROJECT_NAME = "PROJECT-WIPEOUT";
+const PROJECT_NAME = "POC-NFC";
 
 /**
  * Download the zip file from the url
