@@ -1,9 +1,9 @@
-//const Gpio = require("onoff").Gpio;
-//const ledRed = new Gpio(21, "out");
-//const ledOrange = new Gpio(20, "out");
-//const ledGreen = new Gpio(16, "out");
-//const carousel = new Gpio(4, "out");
-//const carouselRed = new Gpio(17, "out");
+const Gpio = require("onoff").Gpio;
+const ledRed = new Gpio(21, "out");
+const ledOrange = new Gpio(20, "out");
+const ledGreen = new Gpio(16, "out");
+const carousel = new Gpio(4, "out");
+const carouselRed = new Gpio(17, "out");
 const { info } = require("./logger");
 const CONSTANTS = require("../helpers/constants");
 const { save } = require("./browser");
@@ -22,11 +22,11 @@ const triggerCode = ({ code, message = "" }) => {
     case CONSTANTS.RESPONSE_RED:
       info(`[triggerCode] ${message}`);
       save(CONSTANTS.RESPONSE_RED, message);
-      //ledRed.writeSync(1);
-      //carouselRed.writeSync(1);
+      ledRed.writeSync(1);
+      carouselRed.writeSync(1);
       break;
     case CONSTANTS.RESPONSE_ORANGE:
-      //ledOrange.writeSync(1);
+      ledOrange.writeSync(1);
       save(CONSTANTS.RESPONSE_ORANGE, message);
       return;
     case CONSTANTS.RESPONSE_BLINK_ORANGE:
@@ -38,8 +38,8 @@ const triggerCode = ({ code, message = "" }) => {
     case CONSTANTS.RESPONSE_GREEN:
       info(`[triggerCode] Tag allowed`);
       save(CONSTANTS.RESPONSE_GREEN, message);
-      //ledGreen.writeSync(1);
-      //carousel.writeSync(1);
+      ledGreen.writeSync(1);
+      carousel.writeSync(1);
       break;
   }
   timeoutID = setTimeout(resetLeds, 2000);
@@ -61,11 +61,11 @@ const resetLeds = () => {
   clearTimeout(timeoutID);
   clearTimeout(timeoutBlinkID);
   valueOrange = 0;
-  //ledGreen.writeSync(0);
-  //ledOrange.writeSync(0);
-  //ledRed.writeSync(0);
-  //carousel.writeSync(0);
-  //carouselRed.writeSync(0);
+  ledGreen.writeSync(0);
+  ledOrange.writeSync(0);
+  ledRed.writeSync(0);
+  carousel.writeSync(0);
+  carouselRed.writeSync(0);
   save("SCAN", "");
 };
 
@@ -73,9 +73,9 @@ const resetLeds = () => {
  * Test all the light by lighting them all
  */
 const startLeds = () => {
-  //ledGreen.writeSync(1);
-  //ledOrange.writeSync(1);
-  //ledRed.writeSync(1);
+  ledGreen.writeSync(1);
+  ledOrange.writeSync(1);
+  ledRed.writeSync(1);
   setTimeout(resetLeds, 2000);
 };
 
