@@ -1,5 +1,6 @@
 const CONSTANTS = require("../helpers/constants");
 const { info } = require("./logger");
+const fetch = require('node-fetch');
 
 module.exports = {
   getTag: async (id) => {
