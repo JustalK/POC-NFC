@@ -14,6 +14,7 @@ const CONSTANTS = require("../helpers/constants");
 
 module.exports = {
   handleNewCard: async ({ id }) => {
+    const startTime = Date.now()
     info(`=========================================`);
     resetLeds();
     triggerCode({ code: CONSTANTS.RESPONSE_ORANGE });
@@ -58,6 +59,7 @@ module.exports = {
       return;
     }
 
+    info(`[handleNewCard] Tag reading Time in ms: ${Date.now() - startTime}`);
     info(`[handleNewCard] ID found in tag: ${tagID}`);
 
     const tagInformation = await getTag(tagID);
@@ -87,5 +89,6 @@ module.exports = {
     }
 
     triggerCode(result);
+    info(`[handleNewCard] Execution Time in ms: ${Date.now() - startTime}`);
   },
 };
