@@ -2,6 +2,8 @@ const TEST = false;
 const TEST_TAG = "21A01575";
 const URL_TAG_API =
   "https://omniscient-apimanage-prod.azure-api.net/clone/omniscient/tags/_search";
+const URL_EMAIL =
+  "https://omniscient-apimanage-prod.azure-api.net/clone/omniscient/tags/_search";
 const API_SUBSCRIPTION_KEY = "48adbc429be54120bfe23b119e7c7cb1";
 const CLIENT_ID = "customer-worksite-bureau_sevres";
 const MINIMUM_BATTERY_LEVEL = 0.3;
