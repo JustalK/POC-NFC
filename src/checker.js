@@ -1,4 +1,6 @@
 const CONSTANTS = require("../helpers/constants");
+const dns = require("dns");
+const { sendEmail } = require("./email");
 
 /**
  * Check that the information from the tag pass all the information
@@ -44,6 +46,24 @@ const checkTag = ({ tagId, clientId, batteryLevel, lastTagUpdate }) => {
   };
 };
 
+/**
+ * Check that internet is actually on
+ */
+const checkInternet = () => {
+  dns.lookupService(
+    CONSTANTS.URL_TEST_DNS,
+    CONSTANT.ILANA_DEFAULT_DNS_PORT,
+    function (error) {
+      if (error) {
+        sendEmail({
+          message: "[checkInternet] Impossible to connect to the internet",
+        });
+      }
+    }
+  );
+};
+
 module.exports = {
   checkTag,
+  checkInternet,
 };

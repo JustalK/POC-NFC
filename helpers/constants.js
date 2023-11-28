@@ -4,6 +4,8 @@ const URL_TAG_API =
   "https://omniscient-apimanage-prod.azure-api.net/clone/omniscient/tags/_search";
 const URL_EMAIL =
   "https://omniscient-apimanage-prod.azure-api.net/clone/omniscient/tags/_search";
+const URL_TEST_DNS = "8.8.8.8";
+const ILANA_DEFAULT_DNS_PORT = 53;
 const API_SUBSCRIPTION_KEY = "48adbc429be54120bfe23b119e7c7cb1";
 const CLIENT_ID = "customer-worksite-bureau_sevres";
 const MINIMUM_BATTERY_LEVEL = 0.3;
