@@ -56,9 +56,13 @@ const checkInternet = () => {
     CONSTANT.ILANA_DEFAULT_DNS_PORT,
     function (error) {
       if (error) {
-        sendEmail({
-          message: "[checkInternet] Impossible to connect to the internet",
-        });
+        // If the hasInternet is already false, it mean the internet has been checked down one time already
+        // The interet has been down for two minutes already
+        if (!Control.hasInternet) {
+          sendEmail({
+            message: "[checkInternet] Impossible to connect to the internet",
+          });
+        }
         Control.hasInternet = false;
       } else {
         Control.hasInternet = true;
