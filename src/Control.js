@@ -3,6 +3,7 @@ const { info } = require("./logger");
 class Control {
   static id;
   static reader;
+  static hasInternet = true;
 
   /**
    * Check if the tag has been replaced by another one

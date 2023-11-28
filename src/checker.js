@@ -1,4 +1,5 @@
 const CONSTANTS = require("../helpers/constants");
+const Control = require("./Control");
 const dns = require("dns");
 const { sendEmail } = require("./email");
 
@@ -58,6 +59,9 @@ const checkInternet = () => {
         sendEmail({
           message: "[checkInternet] Impossible to connect to the internet",
         });
+        Control.hasInternet = false;
+      } else {
+        Control.hasInternet = true;
       }
     }
   );

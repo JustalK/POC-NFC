@@ -14,7 +14,7 @@ const CONSTANTS = require("../helpers/constants");
 
 module.exports = {
   handleNewCard: async ({ id }) => {
-    const startTime = Date.now()
+    const startTime = Date.now();
     info(`=========================================`);
     resetLeds();
     triggerCode({ code: CONSTANTS.RESPONSE_ORANGE });
@@ -61,6 +61,14 @@ module.exports = {
 
     info(`[handleNewCard] Tag reading Time in ms: ${Date.now() - startTime}`);
     info(`[handleNewCard] ID found in tag: ${tagID}`);
+
+    // If we dont have internet
+    if (!Control.hasInternet) {
+      triggerCode({ code: CONSTANTS.RESPONSE_GREEN });
+      info(`[handleNewCard] No Internet`);
+      info(`[handleNewCard] Execution Time in ms: ${Date.now() - startTime}`);
+      return;
+    }
 
     const tagInformation = await getTag(tagID);
 
