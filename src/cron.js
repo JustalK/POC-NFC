@@ -5,12 +5,9 @@ const { checkInternet } = require("./checker");
    * Setup the cron of the application
    */
 const setup = () => {
-  setInterval(function() {
+  cron.schedule("* * * * *", () => {
     checkInternet();
-  }, 1000)
-  //cron.schedule("* * * * *", () => {
-    
-  //});
+  });
 }
 
 module.exports = {

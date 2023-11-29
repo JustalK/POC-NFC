@@ -5,6 +5,7 @@ const fetch = require("node-fetch");
 module.exports = {
   /**
    * Send email
+   * @param {Object} data The data to send by email
    */
   sendEmail: async (data) => {
     try {
