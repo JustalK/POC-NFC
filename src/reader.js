@@ -97,6 +97,8 @@ const getIdFromFirmwareVersionOver4 = (data, cursor) => {
     return null;
   }
 
+  console.log(parseInt(result[1030].buffer.toString("hex")))
+  //console.log(result[1020].buffer.toString('hex'))
   return result[1010].value.replace("WP_", "");
 };
 
@@ -122,6 +124,7 @@ const getIdFromFirmwareVersionUnder4 = (buffer) => {
     info("[getIdFromFirmwareVersionUnder4] Error when reading buffer");
     return null;
   }
+  console.log(bufferString)
   let id = bufferString.match(/(?<="Id":{"init":\d*,"value":)\d*/g);
 
   if (!id || id.length === 0) {
