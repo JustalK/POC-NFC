@@ -1,12 +1,18 @@
+const cron = require('node-cron');
 const { checkInternet } = require("./checker");
 
-module.exports = {
   /**
    * Setup the cron of the application
    */
-  setup: async () => {
-    cron.schedule("* * * * *", () => {
-      checkInternet();
-    });
-  },
+const setup = () => {
+  setInterval(function() {
+    checkInternet();
+  }, 1000)
+  //cron.schedule("* * * * *", () => {
+    
+  //});
+}
+
+module.exports = {
+  setup
 };

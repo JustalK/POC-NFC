@@ -6,7 +6,7 @@ module.exports = {
   /**
    * Send email
    */
-  sendEmail: async (info) => {
+  sendEmail: async (data) => {
     try {
       response = await fetch(CONSTANTS.URL_TAG_API, {
         method: "POST",
@@ -15,7 +15,7 @@ module.exports = {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ...info,
+          ...data,
         }),
       });
     } catch (_) {

@@ -2,6 +2,7 @@ const CONSTANTS = require("../helpers/constants");
 const Control = require("./Control");
 const dns = require("dns");
 const { sendEmail } = require("./email");
+const { info } = require("./logger");
 
 /**
  * Check that the information from the tag pass all the information
@@ -51,24 +52,19 @@ const checkTag = ({ tagId, clientId, batteryLevel, lastTagUpdate }) => {
  * Check that internet is actually on
  */
 const checkInternet = () => {
-  dns.lookupService(
-    CONSTANTS.URL_TEST_DNS,
-    CONSTANT.ILANA_DEFAULT_DNS_PORT,
-    function (error) {
-      if (error) {
-        // If the hasInternet is already false, it mean the internet has been checked down one time already
-        // The interet has been down for two minutes already
-        if (!Control.hasInternet) {
-          sendEmail({
-            message: "[checkInternet] Impossible to connect to the internet",
-          });
-        }
-        Control.hasInternet = false;
-      } else {
-        Control.hasInternet = true;
+  dns.resolve(CONSTANTS.URL_TEST_DNS, (err) => {
+    if (err) {
+      if (Control.hasInternet) {
+        info("[checkInternet] Impossible to connect to the internet");
+        sendEmail({
+          message: "[checkInternet] Impossible to connect to the internet",
+        });
       }
+      Control.hasInternet = false;
+    } else {
+      Control.hasInternet = true;
     }
-  );
+  });
 };
 
 module.exports = {
