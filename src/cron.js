@@ -40,6 +40,7 @@ const setup = async () => {
   Control.minimumBatteryLevel = config.minimumBatteryLevel;
   Control.minimumTimeDifference = config.minimumTimeDifference;
   Control.apiSubscriptionKey = config.apiSubscriptionKey;
+  console.log("TEST");
   cron.schedule("* * * * *", () => {
     //checkInternet();
   });
