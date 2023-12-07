@@ -34,7 +34,12 @@ const getEntryNumber = function () {
 const setup = async () => {
   Control.entryNumber = getEntryNumber();
   console.log(Control.entryNumber);
-  await registerEntryNumber(Control.entryNumber);
+  const response = await registerEntryNumber(Control.entryNumber);
+  const config = response.data.result._source;
+  Control.customerId = config.customerId;
+  Control.minimumBatteryLevel = config.minimumBatteryLevel;
+  Control.minimumTimeDifference = config.minimumTimeDifference;
+  Control.apiSubscriptionKey = config.apiSubscriptionKey;
   cron.schedule("* * * * *", () => {
     //checkInternet();
   });
