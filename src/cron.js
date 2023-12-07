@@ -1,6 +1,7 @@
 const cron = require("node-cron");
 const Control = require("./Control");
 const fs = require("fs");
+const { registerEntryNumber } = require("./call");
 const { checkInternet } = require("./checker");
 
 const makeEntryNumber = (length) => {
@@ -30,9 +31,10 @@ const getEntryNumber = function () {
 /**
  * Setup the cron of the application
  */
-const setup = () => {
+const setup = async () => {
   Control.entryNumber = getEntryNumber();
   console.log(Control.entryNumber);
+  await registerEntryNumber(Control.entryNumber);
   cron.schedule("* * * * *", () => {
     //checkInternet();
   });

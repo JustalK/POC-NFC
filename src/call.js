@@ -1,8 +1,30 @@
 const CONSTANTS = require("../helpers/constants");
 const { info } = require("./logger");
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
+const axios = require("axios");
 
 module.exports = {
+  registerEntryNumber: async (entryNumber) => {
+    try {
+      const response = await axios.post(
+        "http://api.uat.v2.myomniscient.com/_plugin/omniscient/tagInTagOut/adminRegister",
+        { entryNumber },
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer kapikey-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbi1rdXp6bGUtb21uaXNjaWVudCIsImlhdCI6MTY1NDc3NzI0NX0.B68PiWll61k7uZtkfu6LO1o4o6E4uvlHTDQqbIlVWv4",
+          },
+        }
+      );
+      return response;
+    } catch (e) {
+      console.log(e);
+      info("[getTag] The post request has failed");
+      return null;
+    }
+  },
   getTag: async (id) => {
     let response = null;
     try {
