@@ -1,6 +1,7 @@
 const { info } = require("./logger");
 
 class Control {
+  static entryNumber;
   static id;
   static reader;
   static hasInternet = true;
