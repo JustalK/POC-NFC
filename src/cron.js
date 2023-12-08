@@ -36,11 +36,10 @@ const setup = async () => {
   console.log(Control.entryNumber);
   const response = await registerEntryNumber(Control.entryNumber);
   const config = response.data.result._source;
-  Control.customerId = config.customerId;
+  Control.customerId = "customer-" + config.customerId;
   Control.minimumBatteryLevel = config.minimumBatteryLevel;
   Control.minimumTimeDifference = config.minimumTimeDifference;
   Control.apiSubscriptionKey = config.apiSubscriptionKey;
-  console.log("TEST");
   cron.schedule("* * * * *", () => {
     //checkInternet();
   });

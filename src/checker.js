@@ -17,16 +17,21 @@ const checkTag = ({ tagId, clientId, batteryLevel, lastTagUpdate }) => {
     };
   }
 
-  const timeTenMinutesAgo =
-    Date.now() - 1000 * 60 * CONSTANTS.MINIMUM_TIME_DIFFERENCE_IN_MINUTES;
-  if (!CONSTANTS.TEST && lastTagUpdate < timeTenMinutesAgo) {
-    return {
-      code: CONSTANTS.RESPONSE_RED,
-      message: `Last tag position updated more than ${CONSTANTS.MINIMUM_TIME_DIFFERENCE_IN_MINUTES} minutes ago`,
-    };
+  if (Control.minimumTimeDifference) {
+    const timeTenMinutesAgo =
+      Date.now() - 1000 * 60 * Control.minimumTimeDifference;
+    if (lastTagUpdate < timeTenMinutesAgo) {
+      return {
+        code: CONSTANTS.RESPONSE_RED,
+        message: `Last tag position updated more than ${Control.minimumTimeDifference} minutes ago`,
+      };
+    }
   }
 
-  if (batteryLevel < CONSTANTS.MINIMUM_BATTERY_LEVEL) {
+  if (
+    Control.minimumBatteryLevel &&
+    batteryLevel < Control.minimumBatteryLevel
+  ) {
     return {
       code: CONSTANTS.RESPONSE_RED,
       message: `Battery level lower than ${parseInt(
@@ -35,7 +40,7 @@ const checkTag = ({ tagId, clientId, batteryLevel, lastTagUpdate }) => {
     };
   }
 
-  if (clientId !== CONSTANTS.CLIENT_ID) {
+  if (Control.customerId !== "ALL" && clientId !== Control.customerId) {
     return {
       code: CONSTANTS.RESPONSE_RED,
       message: "Tag belong to another client",

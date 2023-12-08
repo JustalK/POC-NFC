@@ -4,6 +4,30 @@ const fetch = require("node-fetch");
 const axios = require("axios");
 
 module.exports = {
+  createTagInTagOut: async (entryNumber, tagId) => {
+    console.log(entryNumber, tagId);
+    try {
+      const response = await axios.post(
+        "http://api.uat.v2.myomniscient.com/_plugin/omniscient/tagInTagOut/create",
+        {
+          entryNumber,
+          tagId: `Wirepas-${tagId}`,
+        },
+        {
+          headers: {
+            Accept: "*/*",
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer kapikey-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbi1rdXp6bGUtb21uaXNjaWVudCIsImlhdCI6MTY1NDc3NzI0NX0.B68PiWll61k7uZtkfu6LO1o4o6E4uvlHTDQqbIlVWv4",
+          },
+        }
+      );
+      return response;
+    } catch (e) {
+      info("[createTagInTagOut] The post request has failed");
+      return null;
+    }
+  },
   registerEntryNumber: async (entryNumber) => {
     try {
       const response = await axios.post(
@@ -20,8 +44,7 @@ module.exports = {
       );
       return response;
     } catch (e) {
-      console.log(e);
-      info("[getTag] The post request has failed");
+      info("[registerEntryNumber] The post request has failed");
       return null;
     }
   },

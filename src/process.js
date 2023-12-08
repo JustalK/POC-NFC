@@ -7,7 +7,7 @@ const {
   getIdFromFirmwareVersionUnder4,
   getIdFromFirmwareVersionOver4,
 } = require("./reader");
-const { getTag } = require("./call");
+const { getTag, createTagInTagOut } = require("./call");
 const { checkTag } = require("./checker");
 const { triggerCode, resetLeds } = require("./response");
 const CONSTANTS = require("../helpers/constants");
@@ -97,6 +97,7 @@ module.exports = {
     }
 
     triggerCode(result);
+    createTagInTagOut(Control.entryNumber, tagID);
     info(`[handleNewCard] Execution Time in ms: ${Date.now() - startTime}`);
   },
 };
