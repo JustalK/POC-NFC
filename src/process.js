@@ -75,16 +75,7 @@ module.exports = {
     if (Control.isProcessAbandonned(id)) {
       return;
     }
-
-    // If I dont have the information for my tag
-    if (!tagInformation) {
-      return;
-    }
-
-    info(`[handleNewCard] Client Id: ${tagInformation.clientId}`);
-    info(`[handleNewCard] Battery Level: ${tagInformation.batteryLevel}`);
-    info(`[handleNewCard] Last tag update: ${tagInformation.lastTagUpdate}`);
-
+    
     const result = checkTag(tagInformation);
 
     if (Control.isProcessAbandonned(id)) {
@@ -97,7 +88,9 @@ module.exports = {
     }
 
     triggerCode(result);
-    createTagInTagOut(Control.entryNumber, tagID);
+    if (result.code === CONSTANTS.RESPONSE_GREEN) {
+      createTagInTagOut(Control.entryNumber, tagID);
+    }
     info(`[handleNewCard] Execution Time in ms: ${Date.now() - startTime}`);
   },
 };

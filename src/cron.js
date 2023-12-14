@@ -28,20 +28,22 @@ const getEntryNumber = function () {
   }
 };
 
-/**
- * Setup the cron of the application
- */
-const setup = async () => {
+const setupControl = async function () {
   Control.entryNumber = getEntryNumber();
-  console.log(Control.entryNumber);
   const response = await registerEntryNumber(Control.entryNumber);
   const config = response.data.result._source;
   Control.customerId = "customer-" + config.customerId;
   Control.minimumBatteryLevel = config.minimumBatteryLevel;
   Control.minimumTimeDifference = config.minimumTimeDifference;
   Control.apiSubscriptionKey = config.apiSubscriptionKey;
+}
+
+/**
+ * Setup the cron of the application
+ */
+const setup = async () => {
   cron.schedule("* * * * *", () => {
-    //checkInternet();
+    setupControl()
   });
 };
 

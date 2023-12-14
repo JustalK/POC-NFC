@@ -9,11 +9,68 @@ const { info } = require("./logger");
  * @param {Object} The tag with all is information
  * @returns {Object} The code with the message associated
  */
-const checkTag = ({ tagId, clientId, batteryLevel, lastTagUpdate }) => {
+const checkTag = (tagInformation) => {
+
+  if (!tagInformation) {
+    return {
+      code: CONSTANTS.RESPONSE_RED,
+      message: "Tag Not linked to a customer",
+    };
+  }
+
+  const {
+    tagId,
+    clientId,
+    batteryLevel,
+    lastTagUpdate,
+    assetId,
+    hasBeenUpdateMinuteAgo,
+  } = tagInformation;
+
+  info(`[handleNewCard] Client Id: ${clientId}`);
+  info(`[handleNewCard] Asset Id: ${assetId}`);
+  info(`[handleNewCard] Battery Level: ${batteryLevel}`);
+  info(`[handleNewCard] Tagged less than a minute: ${hasBeenUpdateMinuteAgo}`);
+
   if (!tagId) {
     return {
       code: CONSTANTS.RESPONSE_RED,
       message: "Tag Not Found",
+    };
+  }
+
+  if (!clientId) {
+    return {
+      code: CONSTANTS.RESPONSE_RED,
+      message: "Tag does not belong to any client",
+    };
+  }
+
+  if (!batteryLevel) {
+    return {
+      code: CONSTANTS.RESPONSE_RED,
+      message: "Battery level is missing",
+    };
+  }
+
+  if (!lastTagUpdate) {
+    return {
+      code: CONSTANTS.RESPONSE_RED,
+      message: "Last update is missing",
+    };
+  }
+
+  if (!assetId) {
+    return {
+      code: CONSTANTS.RESPONSE_RED,
+      message: "Tag has not been associated to an asset",
+    };
+  }
+
+  if (!hasBeenUpdateMinuteAgo) {
+    return {
+      code: CONSTANTS.RESPONSE_RED,
+      message: "Tag has been scanned less than a minute ago",
     };
   }
 
@@ -35,7 +92,7 @@ const checkTag = ({ tagId, clientId, batteryLevel, lastTagUpdate }) => {
     return {
       code: CONSTANTS.RESPONSE_RED,
       message: `Battery level lower than ${parseInt(
-        CONSTANTS.MINIMUM_BATTERY_LEVEL * 100
+        Control.minimumBatteryLevel * 100
       )}%`,
     };
   }
