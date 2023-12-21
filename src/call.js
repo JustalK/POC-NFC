@@ -4,7 +4,7 @@ const fetch = require("node-fetch");
 const axios = require("axios");
 
 const apiCall = async (api, body) => {
-  console.log(body)
+  console.log(body);
   try {
     const response = await axios.post(api, body, {
       headers: {
@@ -24,7 +24,7 @@ const apiCall = async (api, body) => {
 module.exports = {
   createTagInTagOut: async (entryNumber, tagId) => {
     return apiCall(
-      "http://api.uat.v2.myomniscient.com/_plugin/omniscient/tagInTagOut/create",
+      "http://api.staging.v2.myomniscient.com/_plugin/omniscient/tagInTagOut/create",
       {
         entryNumber,
         tagId: `Wirepas-${tagId}`,
@@ -33,13 +33,13 @@ module.exports = {
   },
   registerEntryNumber: async (entryNumber) => {
     return apiCall(
-      "http://api.uat.v2.myomniscient.com/_plugin/omniscient/tagInTagOut/adminRegister",
+      "http://api.staging.v2.myomniscient.com/_plugin/omniscient/tagInTagOut/adminRegister",
       { entryNumber }
     );
   },
   getTag: async (tagId) => {
     const response = await apiCall(
-      "http://api.uat.v2.myomniscient.com/_plugin/omniscient/tagInTagOut/scan",
+      "http://api.staging.v2.myomniscient.com/_plugin/omniscient/tagInTagOut/scan",
       { tagId: `Wirepas-${tagId}` }
     );
 
@@ -55,7 +55,7 @@ module.exports = {
 
     return {
       tagId,
-      ...result
+      ...result,
     };
   },
 };

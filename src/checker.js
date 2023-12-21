@@ -10,7 +10,6 @@ const { info } = require("./logger");
  * @returns {Object} The code with the message associated
  */
 const checkTag = (tagInformation) => {
-
   if (!tagInformation) {
     return {
       code: CONSTANTS.RESPONSE_RED,
@@ -67,7 +66,7 @@ const checkTag = (tagInformation) => {
     };
   }
 
-  if (!hasBeenUpdateMinuteAgo) {
+  if (!hasBeenUpdateMinuteAgo && Control.inOut === "In") {
     return {
       code: CONSTANTS.RESPONSE_RED,
       message: "Tag has been scanned less than a minute ago",

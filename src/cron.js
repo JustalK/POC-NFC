@@ -34,16 +34,17 @@ const setupControl = async function () {
   const config = response.data.result._source;
   Control.customerId = "customer-" + config.customerId;
   Control.minimumBatteryLevel = config.minimumBatteryLevel;
+  Control.inOut = config.inOut;
   Control.minimumTimeDifference = config.minimumTimeDifference;
   Control.apiSubscriptionKey = config.apiSubscriptionKey;
-}
+};
 
 /**
  * Setup the cron of the application
  */
 const setup = async () => {
   cron.schedule("* * * * *", () => {
-    setupControl()
+    setupControl();
   });
 };
 
