@@ -98,7 +98,6 @@ const getIdFromFirmwareVersionOver4 = (data, cursor) => {
   }
 
   console.log(parseInt(result[1030].buffer.toString("hex")))
-  //console.log(result[1020].buffer.toString('hex'))
   return result[1010].value.replace("WP_", "");
 };
 

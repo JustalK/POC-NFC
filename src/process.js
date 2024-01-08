@@ -18,7 +18,7 @@ module.exports = {
     info(`=========================================`);
     resetLeds();
     triggerCode({ code: CONSTANTS.RESPONSE_ORANGE });
-    save("DETECTED", "");
+    save("DETECTED", "", "", "");
     info(`[handleNewCard] Tag scanned: ${id}`);
     const firmwareVersion = await getR7();
 

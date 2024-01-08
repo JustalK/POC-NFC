@@ -16,18 +16,18 @@ let valueOrange = 1;
  * @param {string} code The code error Red, Green, Orange
  * @param {string} message The message associated with the code
  */
-const triggerCode = ({ code, message = "" }) => {
+const triggerCode = ({ code, message = "", message2 = "", message3 = "" }) => {
   resetLeds();
   switch (code) {
     case CONSTANTS.RESPONSE_RED:
       info(`[triggerCode] ${message}`);
-      save(CONSTANTS.RESPONSE_RED, message);
+      save("RED", message, message2, message3);
       ledRed.writeSync(1);
       carouselRed.writeSync(1);
       break;
     case CONSTANTS.RESPONSE_ORANGE:
       ledOrange.writeSync(1);
-      save(CONSTANTS.RESPONSE_ORANGE, message);
+      save("ORANGE", message, message2, message3);
       return;
     case CONSTANTS.RESPONSE_BLINK_ORANGE:
       blinkOrange(valueOrange);
@@ -37,7 +37,7 @@ const triggerCode = ({ code, message = "" }) => {
       break;
     case CONSTANTS.RESPONSE_GREEN:
       info(`[triggerCode] Tag allowed`);
-      save(CONSTANTS.RESPONSE_GREEN, message);
+      save("GREEN", message, message2, message3);
       ledGreen.writeSync(1);
       carousel.writeSync(1);
       break;
@@ -66,7 +66,7 @@ const resetLeds = () => {
   ledRed.writeSync(0);
   carousel.writeSync(0);
   carouselRed.writeSync(0);
-  save("SCAN", "");
+  save("SCAN", "", "", "");
 };
 
 /**
