@@ -11,7 +11,7 @@ const apiCall = async (api, body) => {
         Accept: "*/*",
         "Content-Type": "application/json",
         Authorization:
-          "Bearer kapikey-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhZG1pbi1rdXp6bGUtb21uaXNjaWVudCIsImlhdCI6MTY2MjAyNTQ1Mn0.a1jippSLeqFpSrd70PQVEFYSy0FYCl-jQTW6q9k8kn4",
+          "Bearer kapikey-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJrdXp6bGUtYWRtaW4iLCJpYXQiOjE2NTYzNDAzNTB9.MN0c3u7k9l63vzH2PcbE6-fnlurYzZ38f5yxw-WfYCU",
       },
     });
     return response;
