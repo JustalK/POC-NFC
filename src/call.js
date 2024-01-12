@@ -24,7 +24,7 @@ const apiCall = async (api, body) => {
 module.exports = {
   createTagInTagOut: async (entryNumber, tagId) => {
     return apiCall(
-      "http://api.staging.v2.myomniscient.com/_plugin/omniscient/tagInTagOut/create",
+      "https://api.v2.myomniscient.com/_plugin/omniscient/tagInTagOut/create",
       {
         entryNumber,
         tagId: `Wirepas-${tagId}`,
@@ -33,13 +33,13 @@ module.exports = {
   },
   registerEntryNumber: async (entryNumber) => {
     return apiCall(
-      "http://api.staging.v2.myomniscient.com/_plugin/omniscient/tagInTagOut/adminRegister",
+      "https://api.v2.myomniscient.com/_plugin/omniscient/tagInTagOut/adminRegister",
       { entryNumber }
     );
   },
   getTag: async (tagId) => {
     const response = await apiCall(
-      "http://api.staging.v2.myomniscient.com/_plugin/omniscient/tagInTagOut/scan",
+      "https://api.v2.myomniscient.com/_plugin/omniscient/tagInTagOut/scan",
       { tagId: `Wirepas-${tagId}` }
     );
 
