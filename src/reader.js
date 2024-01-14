@@ -123,12 +123,12 @@ const getIdFromFirmwareVersionUnder4 = (buffer) => {
     info("[getIdFromFirmwareVersionUnder4] Error when reading buffer");
     return null;
   }
-  console.log(bufferString)
   let id = bufferString.match(/(?<="Id":{"init":\d*,"value":)\d*/g);
 
   if (!id || id.length === 0) {
     // Try if it's a Blue Lite Id without Mesh
     id = bufferString.match(/(?<="Name":{"init":.*,"value":")[^"]*/g);
+    id = id.replace("L ID ", "");
   }
 
   if (!id || id.length === 0) {
