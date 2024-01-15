@@ -129,7 +129,7 @@ const getIdFromFirmwareVersionUnder4 = (buffer) => {
     // Try if it's a Blue Lite Id without Mesh
     id = bufferString.match(/(?<="Name":{"init":.*,"value":")[^"]*/g);
     if (id) {
-      id[0] = `Ble-210A${id[0].replace("L ID ", "")}`;
+      id[0] = `Ble-210A${id[0].replace("L ID 00", "")}`;
     }
   } else {
     id[0] = `Wirepas-${id[0]}`
