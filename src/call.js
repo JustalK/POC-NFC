@@ -27,7 +27,7 @@ module.exports = {
       "https://api.v2.myomniscient.com/_plugin/omniscient/tagInTagOut/create",
       {
         entryNumber,
-        tagId: `Wirepas-${tagId}`,
+        tagId: `${tagId}`,
       }
     );
   },
@@ -40,7 +40,7 @@ module.exports = {
   getTag: async (tagId) => {
     const response = await apiCall(
       "https://api.v2.myomniscient.com/_plugin/omniscient/tagInTagOut/scan",
-      { tagId: `Wirepas-${tagId}` }
+      { tagId: `${tagId}` }
     );
 
     if (!response || !response.data) {

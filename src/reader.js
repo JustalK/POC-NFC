@@ -128,6 +128,11 @@ const getIdFromFirmwareVersionUnder4 = (buffer) => {
   if (!id || id.length === 0) {
     // Try if it's a Blue Lite Id without Mesh
     id = bufferString.match(/(?<="Name":{"init":.*,"value":")[^"]*/g);
+    if (id) {
+      id[0] = `Ble-${id[0].replace("L ID ", "")}`;
+    }
+  } else {
+    id[0] = `Wirepas-${id[0]}`
   }
 
   if (!id || id.length === 0) {
@@ -137,7 +142,6 @@ const getIdFromFirmwareVersionUnder4 = (buffer) => {
     return null;
   }
 
-  id[0] = id[0].replace("L ID ", "");
 
   return id[0];
 };
