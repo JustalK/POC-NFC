@@ -97,8 +97,8 @@ const getIdFromFirmwareVersionOver4 = (data, cursor) => {
     return null;
   }
 
-  console.log(parseInt(result[1030].buffer.toString("hex")))
-  return result[1010].value.replace("WP_", "");
+  console.log(parseInt(result[1030].buffer.toString("hex")));
+  return result[1010].value.replace("WP_", "Wirepas-");
 };
 
 /**
@@ -132,7 +132,7 @@ const getIdFromFirmwareVersionUnder4 = (buffer) => {
       id[0] = `Ble-210A${id[0].replace("L ID 00", "")}`;
     }
   } else {
-    id[0] = `Wirepas-${id[0]}`
+    id[0] = `Wirepas-${id[0]}`;
   }
 
   if (!id || id.length === 0) {
@@ -141,7 +141,6 @@ const getIdFromFirmwareVersionUnder4 = (buffer) => {
     );
     return null;
   }
-
 
   return id[0];
 };
