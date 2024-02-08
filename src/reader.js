@@ -97,8 +97,14 @@ const getIdFromFirmwareVersionOver4 = (data, cursor) => {
     return null;
   }
 
-  console.log(parseInt(result[1030].buffer.toString("hex")));
-  return result[1010].value.replace("WP_", "Wirepas-");
+  const regexWirepasError = new RegExp("^WP_0000", "g");
+  if (regexWirepasError.test(result[1010])) {
+    result[1010].value.replace("WP_", "Wirepas-7");
+  } else {
+    result[1010].value.replace("WP_", "Wirepas-");
+  }
+
+  return result[1010].value;
 };
 
 /**
