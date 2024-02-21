@@ -98,10 +98,14 @@ const getIdFromFirmwareVersionOver4 = (data, cursor) => {
   }
 
   const regexWirepasError = new RegExp("^WP_0000", "g");
-  if (regexWirepasError.test(result[1010])) {
-    result[1010].value.replace("WP_", "Wirepas-7");
+  if (regexWirepasError.test(result[1010].value)) {
+    result[1010].value = result[1010].value.replace("WP_", "Wirepas-7");
   } else {
-    result[1010].value.replace("WP_", "Wirepas-");
+    if (result[1010].value[0] === "7") {
+      result[1010].value = "Wirepas-" + result[1010].value;
+    } else {
+      result[1010].value = result[1010].value.replace("WP_", "Wirepas-");
+    }
   }
 
   return result[1010].value;
@@ -131,6 +135,7 @@ const getIdFromFirmwareVersionUnder4 = (buffer) => {
   }
   let id = bufferString.match(/(?<="Id":{"init":\d*,"value":)\d*/g);
 
+  console.log("1012", id);
   if (!id || id.length === 0) {
     // Try if it's a Blue Lite Id without Mesh
     id = bufferString.match(/(?<="Name":{"init":.*,"value":")[^"]*/g);

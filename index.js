@@ -6,11 +6,13 @@ const { v4: uuidv4 } = require("uuid");
 const { handleNewCard } = require("./src/process");
 const { startLeds } = require("./src/response");
 const { setup } = require("./src/cron");
+const { openBrowser } = require("./src/call");
 const Control = require("./src/Control");
 const nfc = new NFC();
 
 info("Start of the program");
 startLeds();
+openBrowser();
 setup();
 
 nfc.on("reader", async (reader) => {
